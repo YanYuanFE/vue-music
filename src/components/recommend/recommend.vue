@@ -1,24 +1,32 @@
 <template>
   <div class="recommend" ref="recommend">
-      <div class="recommend-content">
-        <div v-if="recommends.length" class="slider-wrapper">
-          <slider>
-            <div v-for="item in recommends">
-              <a :href="item.linkUrl">
-                <img :src="item.picUrl" alt="" class="needsclick">
-              </a>
-            </div>
-          </slider>
+      <scroll ref="scroll" class="recommend-content" :data="discList">
+        <div>
+          <div v-if="recommends.length" class="slider-wrapper">
+            <slider>
+              <div v-for="item in recommends">
+                <a :href="item.linkUrl">
+                  <img :src="item.picUrl" alt="" class="needsclick" @load="loadImage">
+                </a>
+              </div>
+            </slider>
+          </div>
+          <div class="recommend-list">
+            <h1 class="list-title">热门歌单推荐</h1>
+            <ul>
+              <li class="item" v-for="item in discList">
+                <div class="icon">
+                  <img width="60" height="60" alt="" :src="item.imgurl">
+                </div>
+                <div class="text">
+                  <h2 class="name" v-html="item.creator.name"></h2>
+                  <p class="desc" v-html="item.dissname"></p>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div class="recommend-list">
-          <h1 class="list-title">热门歌单推荐</h1>
-          <ul>
-            <li class="item">
-
-            </li>
-          </ul>
-        </div>
-      </div>
+      </scroll>
       
   </div>
 </template>
@@ -36,7 +44,8 @@
     },
     data() {
       return {
-        recommends: []
+        recommends: [],
+        discList: []
       }
     },
     created() {
@@ -54,9 +63,15 @@
       _getDiscList() {
         getDiscList().then((res) => {
           if (res.code === ERR_OK) {
-            this.re = res.data
+            this.discList = res.data.list
           }
         })
+      },
+      loadImage() {
+        if (!this.checkloaded) {
+          this.$refs.scroll.refresh()
+          this.checkloaded = true
+        }
       }
     }
   }
@@ -77,6 +92,43 @@
         position: relative;
         width: 100%;
         overflow: hidden;
+      }
+      .recommend-list {
+        .list-title {
+          height: 65px;
+          line-height: 65px;
+          text-align: center;
+          font-size: $font-size-medium;
+          color: $color-theme;
+        }
+        .item {
+          display: flex;
+          box-sizing: border-box;
+          align-items: center;
+          padding: 0 20px 20px 20px;
+          .icon {
+            flex: 0 0 60px;
+            width: 60px;
+            padding-right: 20px;
+          }
+          .text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1;
+            line-height: 20px;
+            overflow: hidden;
+            font-size: $font-size-medium;
+            .name {
+              margin-bottom: 10px;
+              color: $color-text;
+              text-align: left;
+            }
+            .desc {
+              color: $color-text-d;
+            }
+          }
+        }
       }
     }
   }
