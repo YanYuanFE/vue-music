@@ -1,16 +1,37 @@
 <template>
   <transition name="slide">
-    13123
+    <div class="singer-detail"></div>
   </transition>
 </template>
 
 <script>
-export default {
+  import { mapGetters } from 'vuex'
 
-}
+  export default {
+    created() {
+      console.log(this.singer)
+    },
+    computed: {
+      ...mapGetters([
+        'singer'
+      ])
+    }
+
+  }
 </script>
 
 <style lang="scss" scoped>
+  @import "~common/scss/variable";
+
+  .singer-detail {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: $color-background;
+  }
   .slide-enter-active, .slide-leave-active {
     transition: all 0.3s;
   }
