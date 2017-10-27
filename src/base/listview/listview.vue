@@ -120,7 +120,6 @@
           height += item.clientHeight
           this.listHeight.push(height)
         }
-        console.log(this.listHeight)
       }
     },
     watch: {

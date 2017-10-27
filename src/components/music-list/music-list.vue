@@ -10,7 +10,9 @@
       </div>
       <div class="filter" ref="filter"></div>
     </div>
-    <scroll :data="songs" ref="list" class="list">
+    <div class="bg-layer" ref="layer"></div>
+    <scroll :data="songs" @scroll="scroll" 
+            :listen-scroll="listenScroll" :probe-type="probeType" ref="list" class="list" >
       <div class="song-list-wrapper">
         <song-list :songs="songs"></song-list>
       </div>
@@ -21,6 +23,8 @@
 <script>
   import Scroll from 'base/scroll/scroll'
   import SongList from 'base/song-list/song-list'
+
+  const RESERVED_HEIGHT = 40
 
   export default {
     props: {
@@ -39,7 +43,7 @@
     },
     data() {
       return {
-
+        scrollY: 0
       }
     },
     computed: {
@@ -48,11 +52,25 @@
       }
     },
     created() {
-
+      this.probeType = 3
+      this.listenScroll = true
     },
     mounted() {
       this.imageHeight = this.$refs.bgImage.clientHeight
+      this.minTranslateY = -this.imageHeight + RESERVED_HEIGHT
       this.$refs.list.$el.style.top = `${this.imageHeight}px`
+    },
+    methods: {
+      scroll(pos) {
+        this.scrollY = pos.y
+      }
+    },
+    watch: {
+      scrollY(newVal) {
+        let translateY = Math.max(this.minTranslateY, newVal)
+
+        this.$refs.layer.style['transform'] = `translate3d(0, ${translateY}px, 0)`
+      }
     },
     components: {
       Scroll,
@@ -115,6 +133,11 @@
         height: 100%;
         background: rgba(7, 17, 27, 0.4);
       }
+    }
+    .bg-layer {
+      position: relative;
+      height: 100%;
+      background: $color-background;
     }
     .list {
       position: fixed;
