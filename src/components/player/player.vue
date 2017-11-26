@@ -32,13 +32,13 @@
               <i class="icon-sequence"></i>
             </div>
             <div class="icon i-left">
-              <i class="icon-prev"></i>
+              <i class="icon-prev" @click="prev"></i>
             </div>
             <div class="icon i-center">
               <i class="icon-play"></i>
             </div>
             <div class="icon i-right">
-              <i class="icon i-next"></i>
+              <i class="icon i-next" @click="next"></i>
             </div>
             <div class="icon i-right">
               <i class="icon icon-not-favorite"></i>
@@ -75,11 +75,20 @@
   const transform = prefixStyle('transform')
 
   export default {
+    data() {
+      return {
+        songReady: false
+      }
+    },
     computed: {
+      disableCls() {
+        return this.songReady ? '' : 'disable'
+      },
       ...mapGetters([
         'fullScreen',
         'playlist',
-        'currentSong'
+        'currentSong',
+        'currentIndex'
       ])
     },
     methods: {
@@ -145,8 +154,43 @@
           scale
         }
       },
+      next() {
+        if (!this.songReady) {
+          return
+        }
+        let index = this.currentIndex + 1
+        if (index === this.playlist.length) {
+          index = 0
+        }
+        this.setCurrentIndex(index)
+        if (!this.playing) {
+          this.togglePlaying()
+        }
+        this.songReady = false
+      },
+      prev() {
+        if (!this.songReady) {
+          return
+        }
+        let index = this.currentIndex - 1
+        if (index === -1) {
+          index = this.playlist.length
+        }
+        this.setCurrentIndex(index)
+        if (!this.playing) {
+          this.togglePlaying()
+        }
+        this.songReady = false
+      },
+      ready() {
+        this.songReady = true
+      },
+      error() {
+
+      },
       ...mapMutations({
-        setFullScreen: 'SET_FULL_SCREEN'
+        setFullScreen: 'SET_FULL_SCREEN',
+        setCurrentIndex: 'SET_CURRENT_INDEX'
       })
     }
   }
