@@ -28,7 +28,6 @@ var apiRoutes = express.Router()
 
 apiRoutes.get('/lyric', function(req, res) {
   var url = 'https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg'
-  console.log(req.query)
 
   axios.get(url, {
     headers: {
