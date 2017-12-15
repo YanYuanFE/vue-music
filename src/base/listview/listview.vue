@@ -1,5 +1,5 @@
 <template>
-  <scroll class="listview" 
+  <scroll class="listview"
           :data="data"
           :probeType="probeType"
           :listenScroll="listenScroll"
@@ -17,13 +17,13 @@
 
       </li>
     </ul>
-    <div class="list-shortcut" 
-      @touchstart="onShortcutTouchStart" 
+    <div class="list-shortcut"
+      @touchstart="onShortcutTouchStart"
       @touchmove.stop.prevent="onShortcutTouchMove">
       <ul>
-        <li v-for="(item, index) in shortcutList" 
+        <li v-for="(item, index) in shortcutList"
             :data-index="index"
-            :class="{'current':currentIndex === index}" 
+            :class="{'current':currentIndex === index}"
             class="item">{{item}}</li>
       </ul>
     </div>
@@ -91,6 +91,9 @@
         let anchorIndex = parseInt(this.touch.anchorIndex) + delta
 
         this._scrollTo(anchorIndex)
+      },
+      refresh() {
+        this.$refs.listview.refresh()
       },
       scroll(pos) {
         this.scrollY = pos.y
