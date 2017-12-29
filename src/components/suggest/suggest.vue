@@ -3,10 +3,12 @@
            class="suggest"
            :data="result"
            :pullup="pullup"
+           :beforeScroll="beforeScroll"
+           @beforeScroll="listScroll"
            @scrollToEnd="searchMore"
   >
     <ul class="suggest-list">
-      <li class="suggest-item" v-for="item in result">
+      <li class="suggest-item" v-for="item in result" @click="selectItem(item)">
         <div class="icon">
           <i :class="getIconCls(item)"></i>
         </div>
@@ -16,6 +18,9 @@
       </li>
       <loading v-show="hasMore" title=""></loading>
     </ul>
+    <div class="no-result-wrapper" v-show="!hasMore && !result.length">
+      <no-result title="抱歉，暂无搜索结果"></no-result>
+    </div>
   </scroll>
 </template>
 
@@ -26,6 +31,8 @@
   import Singer from 'common/js/singer'
   import Scroll from 'base/scroll/scroll'
   import Loading from 'base/loading/loading'
+  import NoResult from 'base/no-result/no-result'
+  import { mapMutations, mapActions } from 'vuex'
 
   const TYPE_SINGER = 'singer'
   const perpage = 20
@@ -46,7 +53,8 @@
         page: 1,
         hasMore: true,
         result: [],
-        pullup: true
+        pullup: true,
+        beforeScroll: true
       }
     },
     methods: {
@@ -106,12 +114,35 @@
           return `${item.name}-${item.singer}`
         }
       },
+      selectItem(item) {
+        if (item.type === TYPE_SINGER) {
+          const singer = new Singer({
+            id: item.singermid,
+            name: item.singername
+          })
+          this.$router.push({
+            path: `/search/${singer.id}`
+          })
+          this.setSinger(singer)
+        } else {
+          this.insertSong(item)
+        }
+      },
+      listScroll() {
+        this.$emit('listScroll')
+      },
       _checkMore(data) {
         const song = data.song
         if (!song.list.length || (song.curnum + song.curpage * perpage) >= song.totalnum) {
           this.hasMore = false
         }
-      }
+      },
+      ...mapMutations({
+        setSinger: 'SET_SINGER'
+      }),
+      ...mapActions([
+        'insertSong'
+      ])
     },
     watch: {
       query() {
@@ -121,7 +152,8 @@
     components: {
       Singer,
       Scroll,
-      Loading
+      Loading,
+      NoResult
     }
   }
 </script>
@@ -157,12 +189,12 @@
           @include no-wrap;
         }
       }
-      .no-result-wrapper {
-        position: absolute;
-        width: 100%;
-        top: 50%;
-        transform: translateY(-50%);
-      }
+    }
+    .no-result-wrapper {
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      transform: translateY(-50%);
     }
   }
 </style>
