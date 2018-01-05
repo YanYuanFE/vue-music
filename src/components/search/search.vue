@@ -17,16 +17,17 @@
           <div class="search-history" v-show="searchHistory.length">
             <h1 class="title">
               <span class="text">搜索历史</span>
-              <span class="clear" @click="showConfirm">
-              <i class="icon-clear"></i>
-            </span>
+                <span class="clear" @click="showConfirm">
+                  <i class="icon-clear"></i>
+                </span>
             </h1>
+            <search-list :searches="searchHistory"></search-list>
           </div>
         </div>
       </scroll>
     </div>
     <div class="search-result" v-show="query" ref="searchResult">
-      <suggest :query="query" @listScroll="blurInput"></suggest>
+      <suggest :query="query" @listScroll="blurInput" @select="saveSearch"></suggest>
     </div>
     <router-view></router-view>
   </div>
@@ -35,16 +36,22 @@
 <script>
   import Scroll from 'base/scroll/scroll'
   import SearchBox from 'base/search-box/search-box'
+  import SearchList from 'base/search-list/search-list'
   import Suggest from '@/components/suggest/suggest'
   import { getHotKey } from 'api/search'
   import { ERR_OK } from 'api/config'
+  import { mapActions, mapGetters } from 'vuex'
 
   export default {
     name: 'search',
+    computed: {
+      ...mapGetters([
+        'searchHistory'
+      ])
+    },
     data() {
       return {
         hotKey: [],
-        searchHistory: [],
         query: ''
       }
     },
@@ -70,7 +77,13 @@
       },
       blurInput() {
         this.$refs.searchBox.blur()
-      }
+      },
+      saveSearch() {
+        this.saveSearchHistory(this.query)
+      },
+      ...mapActions([
+        'saveSearchHistory'
+      ])
     },
     watch: {
       query(newQuery) {
@@ -84,7 +97,8 @@
     components: {
       SearchBox,
       Scroll,
-      Suggest
+      Suggest,
+      SearchList
     }
   }
 </script>
@@ -94,61 +108,64 @@
   @import "~common/scss/mixin";
 
   .search {
-    margin: 20px;
-  }
-  .shortcut-wrapper {
-    position: fixed;
-    top: 178px;
-    bottom: 0;
-    width: 100%;
-    .shortcut {
-      height: 100%;
-      overflow: hidden;
-      .hot-key {
-        margin: 0 20px 20px 20px;
-        .title {
-          margin-bottom: 20px;
-          font-size: $font-size-medium;
-          color: $color-text-l;
-        }
-        .item {
-          display: inline-block;
-          padding: 5px 10px;
-          margin: 0 20px 10px 0;
-          border-radius: 6px;
-          background: $color-highlight-background;
-          font-size: $font-size-medium;
-          color: $color-text-d;
-        }
-      }
-      .search-history {
-        position: relative;
-        margin: 0 20px;
-        .title {
-          display: flex;
-          align-items: center;
-          height: 40px;
-          font-size: $font-size-medium;
-          color: $color-text-l;
-          .text {
-            flex: 1;
+    .search-box-wrapper {
+      margin: 20px;
+    }
+    .shortcut-wrapper {
+      position: fixed;
+      top: 178px;
+      bottom: 0;
+      width: 100%;
+      .shortcut {
+        height: 100%;
+        overflow: hidden;
+        .hot-key {
+          margin: 0 20px 20px 20px;
+          .title {
+            margin-bottom: 20px;
+            font-size: $font-size-medium;
+            color: $color-text-l;
           }
-          .clear {
-            @include extend-click;
-            .icon-clear {
-              font-size: $font-size-medium;
-              color: $color-text-d;
+          .item {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 0 20px 10px 0;
+            border-radius: 6px;
+            background: $color-highlight-background;
+            font-size: $font-size-medium;
+            color: $color-text-d;
+          }
+        }
+        .search-history {
+          position: relative;
+          margin: 0 20px;
+          .title {
+            display: flex;
+            align-items: center;
+            height: 40px;
+            font-size: $font-size-medium;
+            color: $color-text-l;
+            .text {
+              flex: 1;
+            }
+            .clear {
+              @include extend-click;
+              .icon-clear {
+                font-size: $font-size-medium;
+                color: $color-text-d;
+              }
             }
           }
         }
       }
     }
+    .search-result {
+      position: fixed;
+      width: 100%;
+      top: 178px;
+      bottom: 0;
+    }
   }
-  .search-result {
-    position: fixed;
-    width: 100%;
-    top: 178px;
-    bottom: 0;
-  }
+
 
 </style>

@@ -125,8 +125,10 @@
           })
           this.setSinger(singer)
         } else {
+          console.log(item)
           this.insertSong(item)
         }
+        this.$emit('select')
       },
       listScroll() {
         this.$emit('listScroll')
