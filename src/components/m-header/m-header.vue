@@ -1,7 +1,10 @@
 <template>
   <div class="m-header">
-      <div class="icon"></div>
-      <div class="text">Chicken Music</div>
+    <div class="icon"></div>
+    <div class="text">Chicken Music</div>
+    <router-link tag="div" class="mine" to="/user">
+      <i class="icon-mine"></i>
+    </router-link>
   </div>
 </template>
 
@@ -37,7 +40,7 @@ export default {
             font-size: $font-size-large;
         }
         .mine {
-            
+
         }
     }
 </style>
