@@ -30,7 +30,7 @@
           <loading></loading>
         </div>
       </scroll>
-
+      <router-view></router-view>
   </div>
 </template>
 
@@ -87,7 +87,7 @@
         }
       },
       selectItem(item) {
-        this.router.push({
+        this.$router.push({
           path: `/recommend/${item.dissid}`
         })
         this.setDisc(item)

@@ -1,7 +1,7 @@
 <template>
  <transition class="slide">
    <div class="user-center">
-     <div class="back">
+     <div class="back" @click="back">
        <i class="icon-back"></i>
      </div>
      <div class="switches-wrapper">
@@ -9,22 +9,22 @@
      </div>
      <div class="play-btn">
        <i class="icon-play"></i>
-       <span class="text"></span>
+       <span class="text">随机播放全部</span>
      </div>
-     <div class="list-wrapper">
-       <scroll>
+     <div class="list-wrapper" ref="listWrapper">
+       <scroll ref="favoriteList" class="list-scroll" v-if="currentIndex === 0" :data="favoriteList">
          <div class="list-inner">
-           <song-list></song-list>
+           <song-list :songs="favoriteList" @select="selectSong"></song-list>
          </div>
        </scroll>
-       <scroll class="list-scroll">
+       <scroll ref="playList" class="list-scroll" v-if="currentIndex === 1" :data="playHistory">
          <div class="list-inner">
-           <song-list></song-list>
+           <song-list :songs="playHistory" @select="selectSong"></song-list>
          </div>
        </scroll>
      </div>
-     <div class="no-result-wrapper">
-       <no-result></no-result>
+     <div class="no-result-wrapper" v-show="noResult">
+       <no-result :title="noResultDesc"></no-result>
      </div>
    </div>
  </transition>
@@ -55,14 +55,44 @@
       }
     },
     computed: {
+      noResult() {
+        if (this.currentIndex === 0) {
+          return !this.favoriteList.length
+        } else {
+          return !this.playHistory.length
+        }
+      },
+      noResultDesc() {
+        if (this.currentIndex === 0) {
+          return '暂无收藏歌曲'
+        } else {
+          return '你还没有听过歌曲'
+        }
+      },
       ...mapGetters([
-        'playHistory'
+        'playHistory',
+        'favoriteList'
       ])
     },
     methods: {
+      back() {
+        this.$router.back()
+      },
+      handlePlaylist(playlist) {
+        const bottom = playlist.length > 0 ? '60px' : ''
+        this.$refs.listWrapper.style.bottom = bottom
+        this.$refs.favoriteList && this.$refs.favoriteList.refresh()
+        this.$refs.playList && this.$refs.playList.refresh()
+      },
       switchItem(index) {
         this.currentIndex = index
-      }
+      },
+      selectSong(song) {
+        this.insertSong(new Song(song))
+      },
+      ...mapActions([
+        'insertSong'
+      ])
     },
     components: {
       Scroll,
@@ -101,7 +131,7 @@
         color: $color-theme;
       }
     }
-    .switch-wrapper {
+    .switches-wrapper {
       margin: 10px 0 30px 0;
     }
     .play-btn {
