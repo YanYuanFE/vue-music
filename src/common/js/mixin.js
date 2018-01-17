@@ -35,7 +35,8 @@ export const playerMixin = {
       'playlist',
       'currentSong',
       'sequenceList',
-      'mode'
+      'mode',
+      'favoriteList'
     ])
   },
   methods: {

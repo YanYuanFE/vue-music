@@ -12,15 +12,17 @@
   import { createSong } from 'common/js/song'
   export default {
     name: 'disc',
-    title() {
-      return this.disc.dissname
+    computed: {
+      title() {
+        return this.disc.dissname
+      },
+      bgImage() {
+        return this.disc.imgurl
+      },
+      ...mapGetters([
+        'disc'
+      ])
     },
-    bgImage() {
-      return this.disc.imgurl
-    },
-    ...mapGetters([
-      'disc'
-    ]),
     data() {
       return {
         songs: []

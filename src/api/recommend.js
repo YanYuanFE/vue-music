@@ -37,7 +37,7 @@ export function getDiscList() {
 }
 
 export function getSongList(dissid) {
-  const url = 'https://c.y.qq.com/qzone/fcgi-bin/fcg_ucc_getcdinfo_byids_cp.fcg'
+  const url = '/api/getSongList'
 
   const data = Object.assign({}, commonParams, {
     dissid,
@@ -47,8 +47,13 @@ export function getSongList(dissid) {
     onlysong: 0,
     platform: 'yqq',
     hostUin: 0,
+    loginUin: 0,
     needNewCode: 0
   })
 
-  return jsonp(url, data, options)
+  return axios.get(url, {
+    params: data
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
 }
