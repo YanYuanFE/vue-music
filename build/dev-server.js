@@ -71,7 +71,7 @@ apiRoutes.get('/getSongList', function(req, res) {
 
   axios.get(url, {
     headers: {
-      referer: 'https://y.qq.com/',
+      referer: 'https://y.qq.com/n/yqq/playlist/' + req.query.dissid + '.html',
       host: 'c.y.qq.com'
     },
     params: req.query
