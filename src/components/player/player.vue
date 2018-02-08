@@ -592,11 +592,11 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: $color-text-l;
+            background: $color-background;
             &.active {
               width: 20px;
               border-radius: 5px;
-              background: $color-text-ll;
+              background: $color-text-f;
             }
           }
         }
@@ -679,7 +679,7 @@
       z-index: 100;
       width: 100%;
       height: 60px;
-      background: $color-highlight-background;
+      background: $color-primary;
       &.mini-enter-active, &.mini-leave-active {
         transition: all 0.4s;
       }
@@ -711,12 +711,12 @@
           margin-bottom: 2px;
           @include no-wrap;
           font-size: $font-size-medium;
-          color: $color-text;
+          color: $color-background;
         }
         .desc {
           @include no-wrap;
           font-size: $font-size-small;
-          color: $color-text-d;
+          color: $color-background;
         }
       }
       .control {
@@ -725,7 +725,7 @@
         padding: 0 10px;
         .icon-play-mini, .icon-pause-mini, .icon-playlist {
           font-size: 30px;
-          color: $color-theme-d;
+          color: $color-background;
         }
         .icon-mini {
           font-size: 32px;

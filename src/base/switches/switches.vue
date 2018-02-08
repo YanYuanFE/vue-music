@@ -37,7 +37,7 @@
     align-items: center;
     width: 240px;
     margin: 0 auto;
-    border: 1px solid $color-highlight-background;
+    border: 1px solid $color-primary;
     border-radius: 5px;
     .switch-item {
       flex: 1;
@@ -46,8 +46,8 @@
       font-size: $font-size-medium;
       color: $color-text-d;
       &.active {
-        background: $color-highlight-background;
-        color: $color-text;
+        background: $color-primary;
+        color: $color-background;
       }
     }
   }

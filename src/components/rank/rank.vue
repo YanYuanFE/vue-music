@@ -80,6 +80,7 @@
     .toplist {
       height: 100%;
       overflow: hidden;
+      background: $color-background-d;
       .item {
         display: flex;
         margin: 0 20px;
@@ -101,7 +102,7 @@
           padding: 0 20px;
           height: 100px;
           overflow: hidden;
-          background: $color-highlight-background;
+          background: $color-background;
           color: $color-text-d;
           font-size: $font-size-small;
           .song {

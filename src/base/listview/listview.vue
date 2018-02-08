@@ -230,8 +230,8 @@
         line-height: 30px;
         padding-left: 20px;
         font-size: $font-size-small;
-        color: $color-text-l;
-        background: $color-highlight-background;
+        color: $color-primary;
+        background: $color-background;
       }
     }
     .loading-container {

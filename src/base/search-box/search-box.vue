@@ -51,26 +51,26 @@
     width: 100%;
     padding: 0 6px;
     height: 40px;
-    background: $color-highlight-background;
+    background: $color-background;
     border-radius: 6px;
     .icon-search {
       font-size: 24px;
-      color: $color-background;
+      color: $color-text-l;
     }
     .box {
       flex: 1;
       margin: 0 5px;
       line-height: 18px;
-      background: $color-highlight-background;
-      color: $color-text;
+      background: $color-background;
+      color: $color-text-l;
       font-size: $font-size-medium;
       &::placeholder {
-        color: $color-text-d;
+        color: $color-text-l;
       }
     }
     .icon-dismiss {
       font-size: 16px;
-      color: $color-background;
+      color: $color-text-l;
     }
   }
 

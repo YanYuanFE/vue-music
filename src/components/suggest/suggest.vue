@@ -180,15 +180,15 @@
       .icon {
         flex: 0 0 30px;
         width: 30px;
-        [clear^="icon-"] {
+        [class^="icon-"] {
           font-size: 14px;
-          color: $color-text-d;
+          color: $color-text-l;
         }
       }
       .name {
         flex: 1;
         font-size: $font-size-medium;
-        color: $color-text-d;
+        color: $color-text-l;
         overflow: hidden;
         .text {
           @include no-wrap;

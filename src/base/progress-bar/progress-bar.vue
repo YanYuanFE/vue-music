@@ -84,7 +84,7 @@
       position: relative;
       top: 13px;
       height: 4px;
-      background: rgba(0, 0, 0, 0.3);
+      background: $color-text-f;
       .progress {
         position: absolute;
         height: 100%;
@@ -103,7 +103,7 @@
           box-sizing: border-box;
           width: 16px;
           height: 16px;
-          border: 3px solid $color-text;
+          border: 3px solid $color-background;
           border-radius: 50%;
           background: $color-theme;
         }

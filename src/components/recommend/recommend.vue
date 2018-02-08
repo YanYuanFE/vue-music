@@ -143,7 +143,7 @@
             font-size: $font-size-medium;
             .name {
               margin-bottom: 10px;
-              color: $color-text;
+              color: $color-text-l;
               text-align: left;
             }
             .desc {

@@ -176,7 +176,7 @@
       text-align: center;
       line-height: 40px;
       font-size: $font-size-large;
-      color: $color-text;
+      color: $color-background;
     }
     .bg-image {
       position: relative;

@@ -91,11 +91,11 @@
         overflow: hidden;
         .name {
           @include no-wrap;
-          color: $color-text;
+          color: $color-text-d;
         }
         .desc{
           @include no-wrap;
-          color: $color-text-d;
+          color: $color-text;
           margin-top: 4px;
         }
       }

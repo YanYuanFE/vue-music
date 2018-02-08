@@ -129,7 +129,8 @@
 
   .search {
     .search-box-wrapper {
-      margin: 20px;
+      padding: 20px;
+      background-color: $color-background-d;
     }
     .shortcut-wrapper {
       position: fixed;
@@ -151,9 +152,9 @@
             padding: 5px 10px;
             margin: 0 20px 10px 0;
             border-radius: 6px;
-            background: $color-highlight-background;
+            background: $color-background-d;
             font-size: $font-size-medium;
-            color: $color-text-d;
+            color: $color-text-l;
           }
         }
         .search-history {
