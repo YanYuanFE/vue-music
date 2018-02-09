@@ -84,7 +84,7 @@
       position: relative;
       top: 13px;
       height: 4px;
-      background: $color-text-f;
+      background: $color-background;
       .progress {
         position: absolute;
         height: 100%;
