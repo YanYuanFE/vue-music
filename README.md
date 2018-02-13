@@ -9,6 +9,7 @@
 - Vue2.4
 - Vuex
 - vue-router
+- vue-lazyload
 - scss
 - axios
 - jsonp

@@ -178,7 +178,7 @@
         padding-left: 20px;
         font-size: $font-size-small;
         color: $color-text-l;
-        background: $color-highlight-background;
+        background: $color-background;
         text-align: left;
       }
       .list-group-item {
